@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {TaskComponent} from "./task/task.component";
 import {NewTaskComponent} from './new-task/new-task.component';
-import {NewTask, Task} from './task/task.model';
+import {TasksService} from './tasks.service';
 
 @Component({
   selector: 'app-tasks',
@@ -17,59 +17,23 @@ export class TasksComponent {
   @Input({required: true}) userId !: string;
   @Input({required: true}) name !: string;
   newTaskModalVisibility = false;
-  tasks: Task[] = [
-    {
-      id: 't1',
-      userId: 'u1',
-      title: 'Master Angular',
-      summary:
-        'Learn all the basic and advanced features of Angular & how to apply them.',
-      dueDate: '2025-12-31'
-    },
-    {
-      id: 't2',
-      userId: 'u3',
-      title: 'Build first prototype',
-      summary: 'Build a first prototype of the online shop website',
-      dueDate: '2024-05-31'
-    },
-    {
-      id: 't3',
-      userId: 'u3',
-      title: 'Prepare issue template',
-      summary:
-        'Prepare and describe an issue template which will help with project management',
-      dueDate: '2024-06-15'
-    }
-  ];
+
+  constructor(private tasksService: TasksService) {
+  }
 
   get selectedUserTasks() {
-    return this.tasks.filter(task => task.userId == this.userId);
+    return this.tasksService.getUserTasks(this.userId);
   }
 
   completedTask(taskId: string) {
-    const index = this.tasks.findIndex(task => task.id == taskId);
-    if (index !== -1) {
-      this.tasks.splice(index, 1);
-    }
+    this.tasksService.completeTask(taskId);
   }
 
   onClickedAddNewTaskButton() {
     this.newTaskModalVisibility = true;
   }
 
-  cancelAddNewTaskModal() {
-    this.newTaskModalVisibility = false;
-  }
-
-  createNewTask(newTask: NewTask) {
-    this.tasks.unshift({
-      id: Math.random().toString(),
-      userId: this.userId,
-      title: newTask.title,
-      summary: newTask.summary,
-      dueDate: newTask.dueDate
-    });
+  closeAddNewTaskModal() {
     this.newTaskModalVisibility = false;
   }
 }

@@ -1,7 +1,7 @@
 @if (newTaskModalVisibility) {
   <app-new-task
-    (emitNewTaskOnFormSubmit)="createNewTask($event)"
-    (emitFalseOnClickedCancelButton)="cancelAddNewTaskModal()"/>
+    [userId]="userId"
+    (emitOnClickedCancelButton)="closeAddNewTaskModal()"/>
 }
 
 <section id="tasks">
