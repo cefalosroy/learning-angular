@@ -5,8 +5,17 @@ import {NewTask, Task} from './task/task.model';
   providedIn: 'root'
 })
 export class TasksService {
+  TASKS = 'tasks';
 
   constructor() {
+    this.initTasksFromLocalStorage();
+  }
+
+  private initTasksFromLocalStorage() {
+    const tasksFromStorage = localStorage.getItem(this.TASKS);
+    if (tasksFromStorage) {
+      this.tasks = JSON.parse(tasksFromStorage);
+    }
   }
 
   tasks: Task[] = [
@@ -44,15 +53,21 @@ export class TasksService {
     if (index !== -1) {
       this.tasks.splice(index, 1);
     }
+    this.storeTasksToLocalStorage();
   }
 
   addNewTask(newTask: NewTask, userId: string) {
     this.tasks.unshift({
-      id: Math.random().toString(),
+      id: Date.now().toString(),
       userId: userId,
       title: newTask.title,
       summary: newTask.summary,
       dueDate: newTask.dueDate
     });
+    this.storeTasksToLocalStorage();
+  }
+
+  private storeTasksToLocalStorage() {
+    localStorage.setItem(this.TASKS, JSON.stringify(this.tasks));
   }
 }
