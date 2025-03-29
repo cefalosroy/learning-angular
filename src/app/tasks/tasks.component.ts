@@ -1,11 +1,14 @@
 import {Component, Input} from '@angular/core';
 import {TaskComponent} from "./task/task.component";
+import {NewTaskComponent} from './new-task/new-task.component';
+import {NewTask, Task} from './task/task.model';
 
 @Component({
   selector: 'app-tasks',
   standalone: true,
   imports: [
-    TaskComponent
+    TaskComponent,
+    NewTaskComponent
   ],
   templateUrl: './tasks.component.html',
   styleUrl: './tasks.component.css'
@@ -13,7 +16,8 @@ import {TaskComponent} from "./task/task.component";
 export class TasksComponent {
   @Input({required: true}) userId !: string;
   @Input({required: true}) name !: string;
-  tasks = [
+  newTaskModalVisibility = false;
+  tasks: Task[] = [
     {
       id: 't1',
       userId: 'u1',
@@ -48,5 +52,24 @@ export class TasksComponent {
     if (index !== -1) {
       this.tasks.splice(index, 1);
     }
+  }
+
+  onClickedAddNewTaskButton() {
+    this.newTaskModalVisibility = true;
+  }
+
+  cancelAddNewTaskModal() {
+    this.newTaskModalVisibility = false;
+  }
+
+  createNewTask(newTask: NewTask) {
+    this.tasks.unshift({
+      id: Math.random().toString(),
+      userId: this.userId,
+      title: newTask.title,
+      summary: newTask.summary,
+      dueDate: newTask.dueDate
+    });
+    this.newTaskModalVisibility = false;
   }
 }

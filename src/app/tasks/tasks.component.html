@@ -1,8 +1,18 @@
+@if (newTaskModalVisibility) {
+  <app-new-task
+    (emitNewTaskOnFormSubmit)="createNewTask($event)"
+    (emitFalseOnClickedCancelButton)="cancelAddNewTaskModal()"/>
+}
+
 <section id="tasks">
   <header>
     <h2>{{ name }}'s Tasks</h2>
     <menu>
-      <button>Add Task</button>
+      <button
+        id="addNewTask"
+        (click)="onClickedAddNewTaskButton()"
+      >Add Task
+      </button>
     </menu>
   </header>
   <ul>
