@@ -5,7 +5,7 @@
       <li>
         <app-user [user]="user"
                   [selected]="user.id == selectedUserId"
-                  (userSelectEvent)="onSelectUser($event)"></app-user>
+                  (emitIdOnClickedUserButton)="onSelectUser($event)"></app-user>
       </li>
     }
   </ul>

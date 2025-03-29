@@ -10,9 +10,9 @@ import {Task} from "./task.model";
 })
 export class TaskComponent {
   @Input({required: true}) task!: Task;
-  @Output() taskCompletedEvent = new EventEmitter<string>();
+  @Output() emitIdOnClickedTaskCompleteButton = new EventEmitter<string>();
 
-  onTaskCompleted() {
-    this.taskCompletedEvent.emit(this.task.id);
+  onClickedTaskCompleteButton() {
+    this.emitIdOnClickedTaskCompleteButton.emit(this.task.id);
   }
 }

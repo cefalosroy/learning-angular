@@ -11,13 +11,13 @@ import {User} from "./user.model";
 export class UserComponent {
   @Input({required: true}) user!: User;
   @Input({required: true}) selected!: boolean;
-  @Output() userSelectEvent = new EventEmitter<string>();
+  @Output() emitIdOnClickedUserButton = new EventEmitter<string>();
 
   get imagePath() {
     return 'assets/users/' + this.user.avatar;
   }
 
-  onSelectUser() {
-    this.userSelectEvent.emit(this.user.id)
+  onClickedUserButton() {
+    this.emitIdOnClickedUserButton.emit(this.user.id);
   }
 }

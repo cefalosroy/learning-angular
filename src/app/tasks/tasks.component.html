@@ -10,7 +10,7 @@
       <li>
         <app-task
           [task]="task"
-          (taskCompletedEvent)="completedTask($event)"
+          (emitIdOnClickedTaskCompleteButton)="completedTask($event)"
         ></app-task>
       </li>
     }
